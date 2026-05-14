@@ -1,0 +1,22 @@
+Create a folder nd open in vs code
+Create Dockerfile
+Content in Dockerfile: 
+
+FROM eclipse-temurin:21-jdk
+WORKDIR /app
+COPY . /app
+RUN javac app.java
+CMD ["java","app"]
+
+Put the java file name instead of prime
+
+Create .java file
+Write any apln code
+Save
+
+Run these 2 commands in terminal:
+docker build -t app .
+//where -t h1 is image name
+docker run image-name
+Docker hub should be running-> engine should be running
+Image should be in docker desktop
