@@ -1,0 +1,28 @@
+Open Jenkins
+Open slack.com
+It should show welcome to lab practice
+Create new channel
+More -> tools-> apps -> search Jenkins -> open app -> configure -> add to slack -> select channel nd integrate -> go to step3 -> copy the token
+Go to Jenkins
+Available plugins -> select slack notification and global slack notifier and install them.
+No need to restart Jenkins
+Go to settings -> manage Jenkins ->system ->slack
+Workspace : csections-workspace
+Credentials: Add -> global -> secret text (the token u copied) ->id:anything and then create
+Click drop down nd select the credential
+Test connection -> should show success
+Apply and save
+
+Click on new item
+Select free style project -> ok
+Build steps: Add build steps -> execute windows batch command -> java –version
+
+Post build actions:
+Add post build action -> slack notifications
+Select: 
+Notify build start
+Notify success
+Notify abort
+And then click on build now
+
+
