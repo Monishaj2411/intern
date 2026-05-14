@@ -47,4 +47,7 @@ public class thoju {
 
 Save and run
 
-
+{
+	"fname" : "shilpa",
+	"lname" : "ks"
+}
