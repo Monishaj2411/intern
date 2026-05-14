@@ -1,0 +1,72 @@
+Create a new repo in github
+Create a Dockerfile with the content:
+FROM eclipse-temurin:21-jdk
+WORKDIR /app
+COPY . /app
+RUN javac prime.java
+CMD ["java","prime"]
+
+Create a java appln file (say Hello.java)
+Create a Jenkinsfile with the content: 
+pipeline {
+    agent any
+
+    environment {
+        DOCKERHUB_CREDENTIALS = 'Docker-credentials'
+        IMAGE_NAME = 'pannu27/new_docker_image'
+    }
+
+    stages {
+
+        stage('Build Java Application') {
+            steps {
+                bat 'javac prime.java'
+            }
+        }
+
+        stage('Run Java Program') {
+            steps {
+                bat 'java prime'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                bat 'docker build -t %IMAGE_NAME%:latest .'
+            }
+        }
+
+        stage('Login to DockerHub') {
+            steps {
+                withCredentials([usernamePassword(
+                credentialsId: 'Docker-credentials',
+                usernameVariable: 'USER',
+                passwordVariable: 'PASS')]) {
+
+                    bat 'echo %PASS% | docker login -u %USER% --password-stdin'
+                }
+            }
+        }
+
+        stage('Push Docker Image') {
+            steps {
+                bat 'docker push %IMAGE_NAME%:latest'
+            }
+        }
+    }
+}
+
+Go to Jenkins -> manage credentials -> add credential -> username p.w 
+Give username nd p.w of dockerhub  and click Create
+Jenkins->new item -> pipeline project -> ok
+Select pipelinescript from scm
+Scm -> select git
+Add git repo link
+Add credential
+Branch -> main
+
+Apply and save
+Click on build now
+It should show green check with all the stages being completed
+Image will be showed in docker hub
+
